@@ -68,7 +68,7 @@ class FirebaseController{
       Map<String, dynamic>? data = userInfo.data();
       if(password == data!['password']) {
         final controller = Get.put(UserController());
-        userData = UserModel(id: data['id'], password: data['password'], name: data['name'], phone: data['phone'], address: data['address']);
+        userData = UserModel(id: data['id'], password: data['password'], name: data['name'], phone: data['phone'], address: data['address'], credits: data['credits']);
         Get.find<UserController>().getUserInfo(userData!);
         return true;
       }
