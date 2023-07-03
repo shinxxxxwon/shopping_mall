@@ -494,6 +494,17 @@ class _SignupPageState extends State<SignupPage> {
   }
 
   @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+    _userId.dispose();
+    _userPassword.dispose();
+    _userAddress.dispose();
+    _userPhone.dispose();
+    _userName.dispose();
+  }
+
+  @override
   Widget build(BuildContext context){
     Size _size = MediaQuery.of(context).size;
 

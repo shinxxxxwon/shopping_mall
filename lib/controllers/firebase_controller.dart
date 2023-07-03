@@ -89,20 +89,68 @@ class FirebaseController{
     return snapshot.exists;
   }
 
-  insertUser(String id, String password, String name, String phone, String address) async {
-    print('insert');
-    await FirebaseFirestore.instance.
-    collection('shop/sOM21LLf2mJY8GyjLjoo/user').doc(id).
-    set(
-      {
-        'id':id,
-        'password':password,
-        'name':name,
-        'phone':phone,
-        'address':address
+  insertCard(String number, String valid, String cvc, List<dynamic> credits) async{
+    String temp = "";
+    temp = '$number&$valid&$cvc';
+
+    List<dynamic> data = [];
+    data = credits.toList();
+    data.add(temp);
+    print('data List : $data');
+
+    try {
+      await FirebaseFirestore.instance.
+      collection('shop/sOM21LLf2mJY8GyjLjoo/user').doc(userData!.id).
+      update({'credits':data});
+
+      userData = UserModel(id: userData!.id, password: userData!.password, name: userData!.name, phone: userData!.phone, address: userData!.address, credits: data);
+      Get.find<UserController>().getUserInfo(userData!);
+      print('userData card : $userData');
+    }catch(e){
+      print('insert Card Error : ${e.toString()}');
+    }
+  }
+
+  deleteCard(List<dynamic> credits, dynamic selectCard) async{
+    List<dynamic> data = credits.toList();
+
+    for(int i=0; i<credits.length; i++){
+      if(credits[i].toString() == selectCard.toString()){
+        data.removeAt(i);
       }
-    );
-    print('insert end');
+    }
+
+    try {
+      await FirebaseFirestore.instance.
+      collection('shop/sOM21LLf2mJY8GyjLjoo/user').doc(userData!.id).
+      update({'credits':data});
+
+      userData = UserModel(id: userData!.id, password: userData!.password, name: userData!.name, phone: userData!.phone, address: userData!.address, credits: data);
+      Get.find<UserController>().getUserInfo(userData!);
+      print('userData card : $userData');
+    }catch(e){
+      print('insert Card Error : ${e.toString()}');
+    }
+  }
+
+  insertUser(String id, String password, String name, String phone, String address) async {
+    try{
+      await FirebaseFirestore.instance.
+      collection('shop/sOM21LLf2mJY8GyjLjoo/user').doc(id).
+      set(
+          {
+            'id':id,
+            'password':password,
+            'name':name,
+            'phone':phone,
+            'address':address,
+            'credits':[],
+          }
+      );
+    }catch(e){
+      print('inset User Error : ${e.toString()}');
+    }
+
   }
 }
 

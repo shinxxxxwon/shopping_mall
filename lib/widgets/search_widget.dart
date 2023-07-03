@@ -36,6 +36,7 @@ class _SearchWidgetState extends State<SearchWidget> with SingleTickerProviderSt
   @override
   void dispose() {
     _animationController.dispose();
+    _searchController.dispose();
     super.dispose();
   }
 
@@ -49,6 +50,7 @@ class _SearchWidgetState extends State<SearchWidget> with SingleTickerProviderSt
       }
     });
   }
+
 
   @override
   Widget build(BuildContext context) {

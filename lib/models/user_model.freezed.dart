@@ -25,6 +25,7 @@ mixin _$UserModel {
   String? get name => throw _privateConstructorUsedError;
   String? get phone => throw _privateConstructorUsedError;
   String? get address => throw _privateConstructorUsedError;
+  List<dynamic>? get credits => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -41,7 +42,8 @@ abstract class $UserModelCopyWith<$Res> {
       String? password,
       String? name,
       String? phone,
-      String? address});
+      String? address,
+      List<dynamic>? credits});
 }
 
 /// @nodoc
@@ -59,6 +61,7 @@ class _$UserModelCopyWithImpl<$Res> implements $UserModelCopyWith<$Res> {
     Object? name = freezed,
     Object? phone = freezed,
     Object? address = freezed,
+    Object? credits = freezed,
   }) {
     return _then(_value.copyWith(
       id: id == freezed
@@ -81,6 +84,10 @@ class _$UserModelCopyWithImpl<$Res> implements $UserModelCopyWith<$Res> {
           ? _value.address
           : address // ignore: cast_nullable_to_non_nullable
               as String?,
+      credits: credits == freezed
+          ? _value.credits
+          : credits // ignore: cast_nullable_to_non_nullable
+              as List<dynamic>?,
     ));
   }
 }
@@ -96,7 +103,8 @@ abstract class _$$_UserModelCopyWith<$Res> implements $UserModelCopyWith<$Res> {
       String? password,
       String? name,
       String? phone,
-      String? address});
+      String? address,
+      List<dynamic>? credits});
 }
 
 /// @nodoc
@@ -116,6 +124,7 @@ class __$$_UserModelCopyWithImpl<$Res> extends _$UserModelCopyWithImpl<$Res>
     Object? name = freezed,
     Object? phone = freezed,
     Object? address = freezed,
+    Object? credits = freezed,
   }) {
     return _then(_$_UserModel(
       id: id == freezed
@@ -138,6 +147,10 @@ class __$$_UserModelCopyWithImpl<$Res> extends _$UserModelCopyWithImpl<$Res>
           ? _value.address
           : address // ignore: cast_nullable_to_non_nullable
               as String?,
+      credits: credits == freezed
+          ? _value._credits
+          : credits // ignore: cast_nullable_to_non_nullable
+              as List<dynamic>?,
     ));
   }
 }
@@ -150,8 +163,10 @@ class _$_UserModel extends _UserModel {
       required this.password,
       required this.name,
       required this.phone,
-      required this.address})
-      : super._();
+      required this.address,
+      required final List<dynamic>? credits})
+      : _credits = credits,
+        super._();
 
   factory _$_UserModel.fromJson(Map<String, dynamic> json) =>
       _$$_UserModelFromJson(json);
@@ -166,10 +181,18 @@ class _$_UserModel extends _UserModel {
   final String? phone;
   @override
   final String? address;
+  final List<dynamic>? _credits;
+  @override
+  List<dynamic>? get credits {
+    final value = _credits;
+    if (value == null) return null;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(value);
+  }
 
   @override
   String toString() {
-    return 'UserModel(id: $id, password: $password, name: $name, phone: $phone, address: $address)';
+    return 'UserModel(id: $id, password: $password, name: $name, phone: $phone, address: $address, credits: $credits)';
   }
 
   @override
@@ -181,7 +204,8 @@ class _$_UserModel extends _UserModel {
             const DeepCollectionEquality().equals(other.password, password) &&
             const DeepCollectionEquality().equals(other.name, name) &&
             const DeepCollectionEquality().equals(other.phone, phone) &&
-            const DeepCollectionEquality().equals(other.address, address));
+            const DeepCollectionEquality().equals(other.address, address) &&
+            const DeepCollectionEquality().equals(other._credits, _credits));
   }
 
   @JsonKey(ignore: true)
@@ -192,7 +216,8 @@ class _$_UserModel extends _UserModel {
       const DeepCollectionEquality().hash(password),
       const DeepCollectionEquality().hash(name),
       const DeepCollectionEquality().hash(phone),
-      const DeepCollectionEquality().hash(address));
+      const DeepCollectionEquality().hash(address),
+      const DeepCollectionEquality().hash(_credits));
 
   @JsonKey(ignore: true)
   @override
@@ -211,7 +236,8 @@ abstract class _UserModel extends UserModel {
       required final String? password,
       required final String? name,
       required final String? phone,
-      required final String? address}) = _$_UserModel;
+      required final String? address,
+      required final List<dynamic>? credits}) = _$_UserModel;
   _UserModel._() : super._();
 
   factory _UserModel.fromJson(Map<String, dynamic> json) =
@@ -227,6 +253,8 @@ abstract class _UserModel extends UserModel {
   String? get phone;
   @override
   String? get address;
+  @override
+  List<dynamic>? get credits;
   @override
   @JsonKey(ignore: true)
   _$$_UserModelCopyWith<_$_UserModel> get copyWith =>

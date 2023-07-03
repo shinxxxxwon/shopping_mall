@@ -5,6 +5,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:shopping_mall/controllers/home_controller.dart';
 import 'package:shopping_mall/controllers/user_controller.dart';
+import 'package:shopping_mall/widgets/card_widget.dart';
 import 'package:shopping_mall/widgets/menu_widget.dart';
 import 'package:shopping_mall/widgets/search_widget.dart';
 import 'package:shopping_mall/widgets/tabs_button_widget.dart';
@@ -246,6 +247,10 @@ class _MainPageState extends State<MainPage> {
 
               TextWidget(text: '${controller.userInfo!.name}님', alignment: Alignment.centerLeft, textSize: size.width * 0.08,),
 
+              SizedBox(height: size.height * 0.02),
+
+              CardWidget(),
+
               _myPageMenu(size),
 
             ],
@@ -307,6 +312,12 @@ class _MainPageState extends State<MainPage> {
   void initState() {
     // TODO: implement initState
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
   }
 
   @override

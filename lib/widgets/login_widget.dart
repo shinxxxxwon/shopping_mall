@@ -185,6 +185,14 @@ class _LoginWidgetState extends State<LoginWidget> {
   }
 
   @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+    _idController.dispose();
+    _pwController.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
 
 
