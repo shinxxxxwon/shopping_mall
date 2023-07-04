@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:shopping_mall/controllers/home_controller.dart';
+import 'package:shopping_mall/controllers/product_controller.dart';
 import 'package:shopping_mall/controllers/user_controller.dart';
 import 'package:shopping_mall/widgets/card_widget.dart';
 import 'package:shopping_mall/widgets/menu_widget.dart';
@@ -174,6 +175,7 @@ class _MainPageState extends State<MainPage> {
             text: 'Discover',
             alignment: Alignment.centerLeft,
             textSize: size.width * 0.06,
+            color: Colors.white,
           ),
 
           _discoverView(size),
@@ -182,6 +184,7 @@ class _MainPageState extends State<MainPage> {
             text: 'Brand Shops',
             alignment: Alignment.centerLeft,
             textSize: size.width * 0.06,
+            color: Colors.white,
           ),
 
           _brandView(size),
@@ -190,6 +193,7 @@ class _MainPageState extends State<MainPage> {
             text: 'Category',
             alignment: Alignment.centerLeft,
             textSize: size.width * 0.06,
+            color: Colors.white,
           ),
 
           _categoryView(size),
@@ -198,7 +202,7 @@ class _MainPageState extends State<MainPage> {
     );
   }
 
-  Widget _myPageMenu(Size size){
+  Widget _myPageMenu(String userId, Size size){
 
     final marginHeight = size.height * 0.05;
     final marginWidth = size.width * 0.05;
@@ -216,11 +220,11 @@ class _MainPageState extends State<MainPage> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
 
-          MenuWidget(type: 0, iconData: Icons.list_alt, label: '구매내역'),
+          MenuWidget(userId: userId, type: 0, iconData: Icons.list_alt, label: '구매내역'),
 
-          MenuWidget(type: 1, iconData: Icons.shopping_cart, label: '장바구니'),
+          MenuWidget(userId: userId, type: 1, iconData: Icons.shopping_cart, label: '장바구니'),
 
-          MenuWidget(type: 2, iconData: Icons.volunteer_activism, label: '등록상품'),
+          MenuWidget(userId: userId, type: 2, iconData: Icons.volunteer_activism, label: '등록상품'),
 
         ],
       ),
@@ -245,13 +249,13 @@ class _MainPageState extends State<MainPage> {
 
               SizedBox(height: size.height * 0.1),
 
-              TextWidget(text: '${controller.userInfo!.name}님', alignment: Alignment.centerLeft, textSize: size.width * 0.08,),
+              TextWidget(text: '${controller.userInfo!.name}님', alignment: Alignment.centerLeft, textSize: size.width * 0.08, color: Colors.white,),
 
               SizedBox(height: size.height * 0.02),
 
               CardWidget(),
 
-              _myPageMenu(size),
+              _myPageMenu(controller.userInfo!.id!, size),
 
             ],
           );
@@ -323,6 +327,8 @@ class _MainPageState extends State<MainPage> {
   @override
   Widget build(BuildContext context) {
     Get.put(HomeController());
+    Get.put(UserController());
+    Get.put(ProductController());
 
     Size size = MediaQuery.of(context).size;
 

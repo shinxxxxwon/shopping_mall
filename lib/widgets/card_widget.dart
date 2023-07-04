@@ -49,7 +49,7 @@ class _CardWidgetState extends State<CardWidget> {
                 GestureDetector(
                   onTap: (){
                     firebaseController.deleteCard(credits, selectCard);
-                    Navigator.pop(context);
+                    Get.back();
                   },
                   child: Container(
                     height: size.height * 0.1,
@@ -79,7 +79,7 @@ class _CardWidgetState extends State<CardWidget> {
             isDestructiveAction: true,
             onPressed: () {
               firebaseController.deleteCard(credits, selectCard);
-              Navigator.pop(context);
+              Get.back();
             },
             child: Text(btnText),
           ),
@@ -148,16 +148,8 @@ class _CardWidgetState extends State<CardWidget> {
               }
               return GestureDetector(
                 onTap: () async {
-                  Platform.isAndroid
-                      ? Navigator.push(context,
-                      MaterialPageRoute(builder: (context) =>
-                          CardRegistration(cardNumber: cardNumbers,
-                              cards: controller.userInfo!.credits!)))
-                      : Navigator.push(context,
-                      CupertinoPageRoute(builder: (context) =>
-                          CardRegistration(cardNumber: cardNumbers,
-                              cards: controller.userInfo!.credits!)));
-                },
+                  Get.to(CardRegistration(cardNumber: cardNumbers, cards: controller.userInfo!.credits!));
+                  },
                 child: Container(
                   width: size.width * 0.9,
                   padding: EdgeInsets.zero,

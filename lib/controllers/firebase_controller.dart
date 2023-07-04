@@ -6,8 +6,10 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:get/get.dart';
+import 'package:shopping_mall/controllers/product_controller.dart';
 import 'package:shopping_mall/controllers/user_controller.dart';
-import 'package:shopping_mall/models/user_model.dart';
+import 'package:shopping_mall/models/product/product_model.dart';
+import 'package:shopping_mall/models/user/user_model.dart';
 
 class FirebaseController{
   UserModel? userData;
@@ -50,16 +52,66 @@ class FirebaseController{
     return downloadUrl;
   }
 
+  insertProduct(String id, String title, String info, int category1, int category2, String price, String images) async{
+
+    print('id : $id');
+    print('title : $title');
+    print('info : $info');
+    print('category1 : $category1');
+    print('category2 : $category2');
+    print('price : $price');
+    print('images : ${images}');
+
+    try {
+      final productRef = await FirebaseFirestore.instance.
+      collection('shop/sOM21LLf2mJY8GyjLjoo/product').doc();
+
+      productRef.set({
+        'id': id,
+        'title': title,
+        'info': info,
+        'category1': category1,
+        'category2': category2,
+        'price': price,
+        'images': images
+      });
+
+      final product = ProductModel(id: id, title: title, info: info, category1: category1, category2: category2, price: price, images: images);
+      Get.find<ProductController>().addProduct(product);
 
 
-  void insertProduct(String id, String name, String info, String imageUrl) {
-    _firestore!.collection('product').doc(id).set({
-      'id': id,
-      'name': name,
-      'info': info,
-      'image': imageUrl,
-    });
+    }catch(e){
+      print('insert Card Error : ${e.toString()}');
+    }
+
+
+
   }
+
+  getMyProductData(String id) async{
+    if(Get.find<ProductController>().products.isNotEmpty){
+      Get.find<ProductController>().products.clear();
+    }
+
+    try{
+      List<ProductModel> products = [];
+      final productRef = await _firestore!.collection('shop/sOM21LLf2mJY8GyjLjoo/product').get();
+
+      productRef.docs.forEach((document) {
+        Map<String, dynamic> data = document.data() as Map<String, dynamic>;
+
+        if(data['id'].toString() == id){
+          final product = ProductModel(id: id, title: data['title'], info: data['info'], category1: data['category1'], category2: data['category2'], price: data['price'], images: data['images']);
+          products.add(product);
+        }
+      });
+      print('products : $products');
+      Get.find<ProductController>().getProducts(products);
+    }catch(e){
+      print('getMyProductData error : ${e.toString()}');
+    }
+  }
+
 
   getUserData(String id, String password) async{
     final userInfo = await _firestore!.collection('shop/sOM21LLf2mJY8GyjLjoo/user').doc(id).get();

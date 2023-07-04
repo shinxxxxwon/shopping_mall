@@ -5,8 +5,9 @@ class TextWidget extends StatelessWidget {
   final String? text;
   final Alignment? alignment;
   final double? textSize;
+  final Color? color;
 
-  const TextWidget({Key? key, this.text, this.alignment, this.textSize}) : super(key: key);
+  const TextWidget({Key? key, this.text, this.alignment, this.textSize, this.color}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +24,7 @@ class TextWidget extends StatelessWidget {
       child: Text(
         text!,
         style: TextStyle(
-          color: Colors.white,
+          color: color,
           fontWeight: FontWeight.bold,
           fontSize: textSize!
         ),

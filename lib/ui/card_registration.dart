@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_credit_card/credit_card_widget.dart';
+import 'package:get/get.dart';
 import 'package:shopping_mall/controllers/firebase_controller.dart';
 import 'package:shopping_mall/widgets/text_widget.dart';
 
@@ -73,7 +74,7 @@ class _CardRegistrationState extends State<CardRegistration> {
       margin: EdgeInsets.only(top: marginHeight, left: marginWidth, right: marginWidth, bottom: marginHeight),
       alignment: Alignment.centerLeft,
       child: GestureDetector(
-        onTap: () => Navigator.pop(context),
+        onTap: () => Get.back(),
         child: Icon(
           Icons.arrow_back_ios_new,
           color: Colors.white,
@@ -197,7 +198,7 @@ class _CardRegistrationState extends State<CardRegistration> {
               height: size.height * 0.2,
               alignment: Alignment.center,
               child: TextButton(
-                onPressed: () => Navigator.pop(context),
+                onPressed: () => Get.back(),
                 child: Text(
                   '확인',
                   style: TextStyle(
@@ -228,7 +229,7 @@ class _CardRegistrationState extends State<CardRegistration> {
               height: size.height * 0.1,
               alignment: Alignment.center,
               child: TextButton(
-                onPressed: () => Navigator.pop(context),
+                onPressed: () => Get.back(),
                 child: Text(
                   '확인',
                   style: TextStyle(
@@ -252,7 +253,7 @@ class _CardRegistrationState extends State<CardRegistration> {
         if(validRes){
           String date = _validController.text.replaceRange(2, 2, '/');
           await firebaseController.insertCard(_numberController.text, date, _cvcController.text, widget.cards!);
-          Navigator.pop(context);
+          Get.back();
         }
         else{
           _alertView(size);
@@ -298,15 +299,15 @@ class _CardRegistrationState extends State<CardRegistration> {
 
               _cardView(size),
 
-              TextWidget(text: "카드번호", alignment: Alignment.centerLeft, textSize: size.width * 0.06,),
+              TextWidget(text: "카드번호", alignment: Alignment.centerLeft, textSize: size.width * 0.06, color: Colors.white),
 
               _inputForm(size, _numberController, '카드번호'),
 
-              TextWidget(text: "유효기간", alignment: Alignment.centerLeft, textSize: size.width * 0.06,),
+              TextWidget(text: "유효기간", alignment: Alignment.centerLeft, textSize: size.width * 0.06, color: Colors.white),
 
               _inputForm(size, _validController, '유효기간'),
 
-              TextWidget(text: "CVC", alignment: Alignment.centerLeft, textSize: size.width * 0.06,),
+              TextWidget(text: "CVC", alignment: Alignment.centerLeft, textSize: size.width * 0.06, color: Colors.white),
 
               _inputForm(size, _cvcController, 'cvc'),
 

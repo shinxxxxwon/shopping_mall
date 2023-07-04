@@ -320,11 +320,11 @@ class _SignupPageState extends State<SignupPage> {
       width: size.width * 0.4,
       height: size.height * 0.1,
       child: TextButton(
-        onPressed: () => Navigator.pop(context),
+        onPressed: () => Get.back(),
         child: Text(
           '확인',
           style: TextStyle(
-            color: Colors.black,
+            color: Colors.blue,
             fontSize: size.width * 0.05,
           ),
         ),

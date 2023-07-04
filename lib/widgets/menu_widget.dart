@@ -1,12 +1,17 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:get/get.dart';
+import 'package:shopping_mall/ui/product_page.dart';
 
 class MenuWidget extends StatefulWidget {
+  final String? userId;
   final IconData? iconData;
   final String? label;
   final int? type;
 
-  const MenuWidget({Key? key, this.iconData, this.type, this.label}) : super(key: key);
+  const MenuWidget({Key? key, this.userId, this.iconData, this.type, this.label}) : super(key: key);
 
   @override
   State<MenuWidget> createState() => _MenuWidgetState();
@@ -22,32 +27,45 @@ class _MenuWidgetState extends State<MenuWidget> {
     final marginWidth = size.width * 0.05;
 
     return Expanded(
-      child: Container(
-        alignment: Alignment.center,
-        margin: EdgeInsets.only(top: marginHeight, left: marginWidth, right: marginWidth, bottom: marginHeight),
-        decoration: BoxDecoration(
-          border: Border.all(color: Colors.white),
-          borderRadius: BorderRadius.circular(8.0),
-          color: Colors.transparent,
-        ),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
+      child: GestureDetector(
+        onTap: (){
+          if(widget.label == '등록상품'){
+            Get.to(ProductPage(userId: widget.userId!,));
+           }
+          if(widget.label == '구매내역'){
 
-            Icon(widget.iconData!, color: Colors.white, size: size.width * 0.06,),
+          }
+          if(widget.label == '장바구니'){
 
-            SizedBox(height: size.width * 0.01,),
+          }
+        },
+        child: Container(
+          alignment: Alignment.center,
+          margin: EdgeInsets.only(top: marginHeight, left: marginWidth, right: marginWidth, bottom: marginHeight),
+          decoration: BoxDecoration(
+            border: Border.all(color: Colors.white),
+            borderRadius: BorderRadius.circular(8.0),
+            color: Colors.transparent,
+          ),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
 
-            Text(
-              widget.label!,
-              style: TextStyle(
-                color: Colors.white,
-                fontWeight: FontWeight.w600,
-                fontSize: size.width * 0.04,
-              ),
-            )
+              Icon(widget.iconData!, color: Colors.white, size: size.width * 0.06,),
 
-          ],
+              SizedBox(height: size.width * 0.01,),
+
+              Text(
+                widget.label!,
+                style: TextStyle(
+                  color: Colors.white,
+                  fontWeight: FontWeight.w600,
+                  fontSize: size.width * 0.04,
+                ),
+              )
+
+            ],
+          ),
         ),
       ),
     );
