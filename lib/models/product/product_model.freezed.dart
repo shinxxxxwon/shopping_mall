@@ -20,12 +20,13 @@ ProductModel _$ProductModelFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$ProductModel {
+  String? get key => throw _privateConstructorUsedError;
   String? get id => throw _privateConstructorUsedError;
   String? get title => throw _privateConstructorUsedError;
   String? get info => throw _privateConstructorUsedError;
   int? get category1 => throw _privateConstructorUsedError;
   int? get category2 => throw _privateConstructorUsedError;
-  String? get price => throw _privateConstructorUsedError;
+  int? get price => throw _privateConstructorUsedError;
   String? get images => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -40,12 +41,13 @@ abstract class $ProductModelCopyWith<$Res> {
           ProductModel value, $Res Function(ProductModel) then) =
       _$ProductModelCopyWithImpl<$Res>;
   $Res call(
-      {String? id,
+      {String? key,
+      String? id,
       String? title,
       String? info,
       int? category1,
       int? category2,
-      String? price,
+      int? price,
       String? images});
 }
 
@@ -59,6 +61,7 @@ class _$ProductModelCopyWithImpl<$Res> implements $ProductModelCopyWith<$Res> {
 
   @override
   $Res call({
+    Object? key = freezed,
     Object? id = freezed,
     Object? title = freezed,
     Object? info = freezed,
@@ -68,6 +71,10 @@ class _$ProductModelCopyWithImpl<$Res> implements $ProductModelCopyWith<$Res> {
     Object? images = freezed,
   }) {
     return _then(_value.copyWith(
+      key: key == freezed
+          ? _value.key
+          : key // ignore: cast_nullable_to_non_nullable
+              as String?,
       id: id == freezed
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
@@ -91,7 +98,7 @@ class _$ProductModelCopyWithImpl<$Res> implements $ProductModelCopyWith<$Res> {
       price: price == freezed
           ? _value.price
           : price // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as int?,
       images: images == freezed
           ? _value.images
           : images // ignore: cast_nullable_to_non_nullable
@@ -108,12 +115,13 @@ abstract class _$$_ProductModelCopyWith<$Res>
       __$$_ProductModelCopyWithImpl<$Res>;
   @override
   $Res call(
-      {String? id,
+      {String? key,
+      String? id,
       String? title,
       String? info,
       int? category1,
       int? category2,
-      String? price,
+      int? price,
       String? images});
 }
 
@@ -130,6 +138,7 @@ class __$$_ProductModelCopyWithImpl<$Res>
 
   @override
   $Res call({
+    Object? key = freezed,
     Object? id = freezed,
     Object? title = freezed,
     Object? info = freezed,
@@ -139,6 +148,10 @@ class __$$_ProductModelCopyWithImpl<$Res>
     Object? images = freezed,
   }) {
     return _then(_$_ProductModel(
+      key: key == freezed
+          ? _value.key
+          : key // ignore: cast_nullable_to_non_nullable
+              as String?,
       id: id == freezed
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
@@ -162,7 +175,7 @@ class __$$_ProductModelCopyWithImpl<$Res>
       price: price == freezed
           ? _value.price
           : price // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as int?,
       images: images == freezed
           ? _value.images
           : images // ignore: cast_nullable_to_non_nullable
@@ -175,7 +188,8 @@ class __$$_ProductModelCopyWithImpl<$Res>
 @JsonSerializable()
 class _$_ProductModel extends _ProductModel {
   _$_ProductModel(
-      {required this.id,
+      {required this.key,
+      required this.id,
       required this.title,
       required this.info,
       required this.category1,
@@ -188,6 +202,8 @@ class _$_ProductModel extends _ProductModel {
       _$$_ProductModelFromJson(json);
 
   @override
+  final String? key;
+  @override
   final String? id;
   @override
   final String? title;
@@ -198,13 +214,13 @@ class _$_ProductModel extends _ProductModel {
   @override
   final int? category2;
   @override
-  final String? price;
+  final int? price;
   @override
   final String? images;
 
   @override
   String toString() {
-    return 'ProductModel(id: $id, title: $title, info: $info, category1: $category1, category2: $category2, price: $price, images: $images)';
+    return 'ProductModel(key: $key, id: $id, title: $title, info: $info, category1: $category1, category2: $category2, price: $price, images: $images)';
   }
 
   @override
@@ -212,6 +228,7 @@ class _$_ProductModel extends _ProductModel {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_ProductModel &&
+            const DeepCollectionEquality().equals(other.key, key) &&
             const DeepCollectionEquality().equals(other.id, id) &&
             const DeepCollectionEquality().equals(other.title, title) &&
             const DeepCollectionEquality().equals(other.info, info) &&
@@ -225,6 +242,7 @@ class _$_ProductModel extends _ProductModel {
   @override
   int get hashCode => Object.hash(
       runtimeType,
+      const DeepCollectionEquality().hash(key),
       const DeepCollectionEquality().hash(id),
       const DeepCollectionEquality().hash(title),
       const DeepCollectionEquality().hash(info),
@@ -246,18 +264,21 @@ class _$_ProductModel extends _ProductModel {
 
 abstract class _ProductModel extends ProductModel {
   factory _ProductModel(
-      {required final String? id,
+      {required final String? key,
+      required final String? id,
       required final String? title,
       required final String? info,
       required final int? category1,
       required final int? category2,
-      required final String? price,
+      required final int? price,
       required final String? images}) = _$_ProductModel;
   _ProductModel._() : super._();
 
   factory _ProductModel.fromJson(Map<String, dynamic> json) =
       _$_ProductModel.fromJson;
 
+  @override
+  String? get key;
   @override
   String? get id;
   @override
@@ -269,7 +290,7 @@ abstract class _ProductModel extends ProductModel {
   @override
   int? get category2;
   @override
-  String? get price;
+  int? get price;
   @override
   String? get images;
   @override

@@ -14,4 +14,9 @@ class ProductController extends GetxController{
     products = list;
     update();
   }
+
+  deleteProduct(ProductModel data){
+    products.remove(data);
+    update();
+  }
 }

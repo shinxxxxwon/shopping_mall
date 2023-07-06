@@ -4,54 +4,26 @@ import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:shopping_mall/controllers/firebase_controller.dart';
 import 'package:shopping_mall/controllers/product_controller.dart';
+import 'package:shopping_mall/models/product/product_model.dart';
 import 'package:shopping_mall/ui/product_detail_page.dart';
+import 'package:shopping_mall/ui/product_registration_page.dart';
+import 'package:shopping_mall/widgets/text_widget.dart';
 
-class ProductPage extends StatefulWidget {
-  final bool? isBrand;
-  final int? brand;
-  final int? category;
-  const ProductPage({Key? key, this.category, this.brand, this.isBrand}) : super(key: key);
+class MyProductPage extends StatefulWidget {
+  final String? userId;
+  const MyProductPage({Key? key, this.userId}) : super(key: key);
 
   @override
-  State<ProductPage> createState() => _ProductPageState();
+  State<MyProductPage> createState() => _MyProductPageState();
 }
 
-class _ProductPageState extends State<ProductPage> {
+class _MyProductPageState extends State<MyProductPage> {
 
   Widget _backPage(Size size){
     final marginHeight = size.height * 0.02;
     final marginWidth = size.width * 0.05;
-    String title = "";
-
-    if(widget.isBrand!){
-      if(widget.brand == 0){
-        title = "CUCCI";
-      }
-      else if(widget.brand == 1){
-        title = "BERBURY";
-      }
-      else if(widget.brand == 2){
-        title = "Louis Vuitton";
-      }
-      else if(widget.brand == 3){
-        title = "CHANNEL";
-      }
-      else{
-        title = "PRADA";
-      }
-    }
-    else{
-      if(widget.category == 0){
-        title = "Cloths";
-      }
-      else if(widget.category == 1){
-        title = "Bags";
-      }
-      else{
-        title = "Shoose";
-      }
-    }
 
     return Container(
       width: size.width,
@@ -72,7 +44,7 @@ class _ProductPageState extends State<ProductPage> {
           SizedBox(width: size.width * 0.05),
 
           Text(
-            title,
+            '등록상품',
             style: TextStyle(
               color: Colors.black,
               fontSize: size.width * 0.06,
@@ -84,14 +56,18 @@ class _ProductPageState extends State<ProductPage> {
     );
   }
 
-  Widget _productView(Size size){
+  Widget _productsView(Size size){
+    final marginHeight = size.height * 0.02;
+    final marginWidth = size.width * 0.05;
+
     final format = NumberFormat('###,###');
 
     return GetBuilder<ProductController>(
       builder: (controller){
         return Container(
           width: size.width,
-          height: size.height * 0.85,
+          height: size.height * 0.73,
+          // margin: EdgeInsets.only(top: marginHeight, left: marginWidth, right: marginWidth, bottom: marginHeight),
           alignment: Alignment.center,
           child: GridView.builder(
             gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
@@ -102,9 +78,9 @@ class _ProductPageState extends State<ProductPage> {
             itemBuilder: (context, index){
               return GestureDetector(
                 onLongPress: (){
-                  // _deleteProduct(size, controller.products[index]);
+                  _deleteProduct(size, controller.products[index]);
                 },
-                onTap: () => Get.to(ProductDetailPage(product: controller.products[index], isMy: false)),
+                onTap: () => Get.to(ProductDetailPage(product: controller.products[index], isMy: true,)),
                 child: Container(
                   alignment: Alignment.center,
                   decoration: BoxDecoration(
@@ -164,7 +140,37 @@ class _ProductPageState extends State<ProductPage> {
     );
   }
 
+  Widget _okButton(Size size){
+    final marginHeight = size.height * 0.02;
+    final marginWidth = size.width * 0.05;
+
+    return GestureDetector(
+      onTap: (){
+        Get.to(ProductRegistrationPage(userId: widget.userId!));
+      },
+      child: Container(
+        width: size.width,
+        height: size.height * 0.08,
+        alignment: Alignment.center,
+        margin: EdgeInsets.only(top: marginHeight, left: marginWidth, right: marginWidth, bottom: marginHeight),
+        decoration: BoxDecoration(
+          color: Colors.red,
+          borderRadius: BorderRadius.circular(16.0),
+        ),
+        child: Text(
+          '상품 등록',
+          style: TextStyle(
+            color: Colors.white,
+            fontWeight: FontWeight.w500,
+            fontSize: size.width * 0.06,
+          ),
+        ),
+      ),
+    );
+  }
+
   Widget _pageView(Size size){
+
     return Container(
       width: size.width,
       height: size.height,
@@ -174,17 +180,26 @@ class _ProductPageState extends State<ProductPage> {
 
           _backPage(size),
 
-          _productView(size),
+          _productsView(size),
+
+          _okButton(size),
 
         ],
       ),
     );
   }
-  
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    firebaseController.getMyProductData(widget.userId!);
+  }
+
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-    
+
     return Platform.isAndroid
         ? MaterialApp(
       home: Scaffold(
@@ -198,6 +213,79 @@ class _ProductPageState extends State<ProductPage> {
         child: SafeArea(
           child: _pageView(size),
         ),
+      ),
+    );
+  }
+
+  _deleteProduct(Size size, ProductModel product){
+
+    String title = "상품을 삭제하시겠습니까?";
+    String btnText = "상품 제거하기";
+
+
+    Platform.isAndroid
+        ? showModalBottomSheet<void>(
+      context: context,
+      backgroundColor: Colors.white.withOpacity(0.9),
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.only(
+          topRight: Radius.circular(16.0),
+          topLeft: Radius.circular(16.0),
+        ),
+      ),
+      builder: (BuildContext context) {
+        return Container(
+          height: size.height * 0.2,
+          child: Center(
+            child: Column(
+              children: <Widget>[
+                Container(
+                  width: size.width,
+                  height: size.height * 0.05,
+                  alignment: Alignment.center,
+                  child: Text(title),
+                ),
+
+                Divider(),
+
+                GestureDetector(
+                  onTap: (){
+                    firebaseController.deleteProduct(product);
+                    Get.back();
+                  },
+                  child: Container(
+                    height: size.height * 0.1,
+                    alignment: Alignment.center,
+                    child: Text(
+                      btnText,
+                      style: TextStyle(
+                        color: Colors.red,
+                        fontWeight: FontWeight.bold,
+                        fontSize: size.width * 0.05,
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        );
+      },
+    )
+        : showCupertinoModalPopup<void>(
+      context: context,
+      builder: (BuildContext context) => CupertinoActionSheet(
+        title: Text(title),
+        actions: <CupertinoActionSheetAction>[
+          CupertinoActionSheetAction(
+            isDestructiveAction: true,
+            onPressed: () {
+              firebaseController.deleteProduct(product);
+              Get.back();
+            },
+            child: Text(btnText),
+          ),
+        ],
       ),
     );
   }

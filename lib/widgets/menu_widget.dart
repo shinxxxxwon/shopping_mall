@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
-import 'package:shopping_mall/ui/product_page.dart';
+import 'package:shopping_mall/ui/my_product_page.dart';
 
 class MenuWidget extends StatefulWidget {
   final String? userId;
@@ -30,7 +30,7 @@ class _MenuWidgetState extends State<MenuWidget> {
       child: GestureDetector(
         onTap: (){
           if(widget.label == '등록상품'){
-            Get.to(ProductPage(userId: widget.userId!,));
+            Get.to(MyProductPage(userId: widget.userId!,));
            }
           if(widget.label == '구매내역'){
 

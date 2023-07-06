@@ -3,9 +3,12 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
+import 'package:shopping_mall/controllers/firebase_controller.dart';
 import 'package:shopping_mall/controllers/home_controller.dart';
 import 'package:shopping_mall/controllers/product_controller.dart';
 import 'package:shopping_mall/controllers/user_controller.dart';
+import 'package:shopping_mall/ui/product_detail_page.dart';
+import 'package:shopping_mall/ui/product_page.dart';
 import 'package:shopping_mall/widgets/card_widget.dart';
 import 'package:shopping_mall/widgets/menu_widget.dart';
 import 'package:shopping_mall/widgets/search_widget.dart';
@@ -76,23 +79,29 @@ class _MainPageState extends State<MainPage> {
         itemCount: brandTitle.length,
         scrollDirection: Axis.horizontal,
         itemBuilder: (context, index) {
-          return Container(
-            // margin: EdgeInsets.only(left: size.width * 0.01),
-            alignment: Alignment.center,
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(16.0),
-              image: DecorationImage(
-                image: NetworkImage(imageUrl[index]),
-                fit: BoxFit.fill,
-              ),
-            ),
-            child: Text(
-              brandTitle[index],
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
+          return GestureDetector(
+            onTap: () async{
+              await firebaseController.getProductData(index, 0, true);
+              Get.to(ProductPage(brand: index, category: 0, isBrand: true));
+            },
+            child: Container(
+              // margin: EdgeInsets.only(left: size.width * 0.01),
+              alignment: Alignment.center,
+              decoration: BoxDecoration(
                 color: Colors.white,
-                fontSize: size.width * 0.05,
+                borderRadius: BorderRadius.circular(16.0),
+                image: DecorationImage(
+                  image: NetworkImage(imageUrl[index]),
+                  fit: BoxFit.fill,
+                ),
+              ),
+              child: Text(
+                brandTitle[index],
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  color: Colors.white,
+                  fontSize: size.width * 0.05,
+                ),
               ),
             ),
           );
@@ -130,23 +139,29 @@ class _MainPageState extends State<MainPage> {
         physics: const NeverScrollableScrollPhysics(),
         itemCount: 3,
         itemBuilder: (context, index){
-          return Container(
-            // margin: EdgeInsets.only(left: size.width * 0.01),
-            alignment: Alignment.center,
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(16.0),
-              image: DecorationImage(
-                image: NetworkImage(imageUrl[index]),
-                fit: BoxFit.fill,
-              ),
-            ),
-            child: Text(
-              categoryTitle[index],
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
+          return GestureDetector(
+            onTap: () async{
+              await firebaseController.getProductData(0, index, false);
+              Get.to(ProductPage(brand: 0, category: index, isBrand: false,));
+              },
+            child: Container(
+              // margin: EdgeInsets.only(left: size.width * 0.01),
+              alignment: Alignment.center,
+              decoration: BoxDecoration(
                 color: Colors.white,
-                fontSize: size.width * 0.05,
+                borderRadius: BorderRadius.circular(16.0),
+                image: DecorationImage(
+                  image: NetworkImage(imageUrl[index]),
+                  fit: BoxFit.fill,
+                ),
+              ),
+              child: Text(
+                categoryTitle[index],
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  color: Colors.white,
+                  fontSize: size.width * 0.05,
+                ),
               ),
             ),
           );

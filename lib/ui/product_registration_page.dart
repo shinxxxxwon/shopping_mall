@@ -31,7 +31,8 @@ class _ProductRegistrationPageState extends State<ProductRegistrationPage> {
     Text('GUCCI'),
     Text('BERBURY'),
     Text('Louis Vuitton'),
-    Text('CHANNEL')
+    Text('CHANNEL'),
+    Text('PRADA')
   ];
   List<Text> aosCategorys = [
     Text('Cloths'),
@@ -43,7 +44,8 @@ class _ProductRegistrationPageState extends State<ProductRegistrationPage> {
     'GUCCI',
     'BERBURY',
     'Louis Vuitton',
-    'CHANNEL'
+    'CHANNEL',
+    'PRADA'
   ];
   List<String> iosCategorys = [
     'Cloths',
@@ -53,8 +55,6 @@ class _ProductRegistrationPageState extends State<ProductRegistrationPage> {
 
   final ImagePicker _picker = ImagePicker();
   final List<XFile?> _pickedImages = [];
-
-
 
   String _selectBrand = "";
   String _category = "";
@@ -358,8 +358,8 @@ class _ProductRegistrationPageState extends State<ProductRegistrationPage> {
               _infoController.text,
               _category1,
               _category2,
-              _priceController.text,
-              _pickedImages[0]!.path,
+              int.parse(_priceController.text),
+              _pickedImages[0]!,
           );
 
           Get.back();

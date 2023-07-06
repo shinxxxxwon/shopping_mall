@@ -6,6 +6,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:get/get.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:shopping_mall/controllers/product_controller.dart';
 import 'package:shopping_mall/controllers/user_controller.dart';
 import 'package:shopping_mall/models/product/product_model.dart';
@@ -52,31 +53,33 @@ class FirebaseController{
     return downloadUrl;
   }
 
-  insertProduct(String id, String title, String info, int category1, int category2, String price, String images) async{
-
-    print('id : $id');
-    print('title : $title');
-    print('info : $info');
-    print('category1 : $category1');
-    print('category2 : $category2');
-    print('price : $price');
-    print('images : ${images}');
+  insertProduct(String id, String title, String info, int category1, int category2, int price, XFile images) async{
+    String fileName = DateTime.now().millisecondsSinceEpoch.toString();
+    Reference reference = _storageRef!.child('images/$fileName');
 
     try {
+      final byteData = await images.readAsBytes();
+      final metadata = SettableMetadata(contentType: 'image/jpeg');
+
+      await reference.putData(byteData.buffer.asUint8List(), metadata);
+      final downloadUrl = await reference.getDownloadURL();
+      print('downloadUrl : $downloadUrl');
+
       final productRef = await FirebaseFirestore.instance.
       collection('shop/sOM21LLf2mJY8GyjLjoo/product').doc();
 
       productRef.set({
+        'key': productRef.id,
         'id': id,
         'title': title,
         'info': info,
         'category1': category1,
         'category2': category2,
         'price': price,
-        'images': images
+        'images': downloadUrl
       });
 
-      final product = ProductModel(id: id, title: title, info: info, category1: category1, category2: category2, price: price, images: images);
+      final product = ProductModel(key: productRef.id, id: id, title: title, info: info, category1: category1, category2: category2, price: price, images: downloadUrl);
       Get.find<ProductController>().addProduct(product);
 
 
@@ -86,6 +89,94 @@ class FirebaseController{
 
 
 
+  }
+
+  getProductData(int brand, int category, bool isBrand) async{
+    if(Get.find<ProductController>().products.isNotEmpty){
+      Get.find<ProductController>().products.clear();
+    }
+
+    try{
+      List<ProductModel> products = [];
+      final productRef = await _firestore!.collection('shop/sOM21LLf2mJY8GyjLjoo/product').get();
+
+      productRef.docs.forEach((document) {
+        Map<String, dynamic> data = document.data() as Map<String, dynamic>;
+
+        if(isBrand){
+          switch(brand){
+            //GUCCI
+            case 0:
+              if(data['category1'] == brand) {
+                final product = ProductModel(key: data['key'], id: data['id'], title: data['title'], info: data['info'], category1: data['category1'], category2: data['category2'], price: data['price'], images: data['images']);
+                products.add(product);
+              }
+              break;
+            //BERBURY
+            case 1:
+              if(data['category1'] == brand) {
+                final product = ProductModel(key: data['key'], id: data['id'], title: data['title'], info: data['info'], category1: data['category1'], category2: data['category2'], price: data['price'], images: data['images']);
+                products.add(product);
+              }
+              break;
+            //Lois Vuitton
+            case 2:
+              if(data['category1'] == brand) {
+                final product = ProductModel(key: data['key'], id: data['id'], title: data['title'], info: data['info'], category1: data['category1'], category2: data['category2'], price: data['price'], images: data['images']);
+                products.add(product);
+              }
+              break;
+          //CHANNEL
+            case 3:
+              if(data['category1'] == brand) {
+                final product = ProductModel(key: data['key'], id: data['id'], title: data['title'], info: data['info'], category1: data['category1'], category2: data['category2'], price: data['price'], images: data['images']);
+                products.add(product);
+              }
+              break;
+          //Prada
+            case 4:
+              if(data['category1'] == brand) {
+                final product = ProductModel(key: data['key'], id: data['id'], title: data['title'], info: data['info'], category1: data['category1'], category2: data['category2'], price: data['price'], images: data['images']);
+                products.add(product);
+              }
+              break;
+            default:
+              null;
+          }
+        }
+        else{
+          switch(category){
+            //Cloths
+            case 0:
+              if(data['category2'] == category) {
+                final product = ProductModel(key: data['key'], id: data['id'], title: data['title'], info: data['info'], category1: data['category1'], category2: data['category2'], price: data['price'], images: data['images']);
+                products.add(product);
+              }
+              break;
+            //Bags
+            case 1:
+              if(data['category2'] == category) {
+                final product = ProductModel(key: data['key'], id: data['id'], title: data['title'], info: data['info'], category1: data['category1'], category2: data['category2'], price: data['price'], images: data['images']);
+                products.add(product);
+              }
+              break;
+            //Shoose
+            case 2:
+              if(data['category2'] == category) {
+                final product = ProductModel(key: data['key'], id: data['id'], title: data['title'], info: data['info'], category1: data['category1'], category2: data['category2'], price: data['price'], images: data['images']);
+                products.add(product);
+              }
+              break;
+            default:
+              null;
+          }
+        }
+      });
+      print('products : $products');
+      Get.find<ProductController>().getProducts(products);
+    }catch(e){
+      print('getMyProductData error : ${e.toString()}');
+    }
   }
 
   getMyProductData(String id) async{
@@ -101,7 +192,7 @@ class FirebaseController{
         Map<String, dynamic> data = document.data() as Map<String, dynamic>;
 
         if(data['id'].toString() == id){
-          final product = ProductModel(id: id, title: data['title'], info: data['info'], category1: data['category1'], category2: data['category2'], price: data['price'], images: data['images']);
+          final product = ProductModel(key: data['key'], id: id, title: data['title'], info: data['info'], category1: data['category1'], category2: data['category2'], price: data['price'], images: data['images']);
           products.add(product);
         }
       });
@@ -109,6 +200,20 @@ class FirebaseController{
       Get.find<ProductController>().getProducts(products);
     }catch(e){
       print('getMyProductData error : ${e.toString()}');
+    }
+  }
+
+  deleteProduct(ProductModel product) async{
+    try {
+      await FirebaseFirestore.instance.
+      collection('shop/sOM21LLf2mJY8GyjLjoo/product').doc(product.key).
+      delete();
+
+      final data = ProductModel(key: product.key, id: product.id, title: product.title, info: product.info, category1: product.category1, category2: product.category2, price: product.price, images: product.images);
+
+      Get.find<ProductController>().deleteProduct(data);
+    }catch(e){
+      print('delete Product Error : ${e.toString()}');
     }
   }
 
