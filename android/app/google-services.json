@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "1026264339146",
+    "project_id": "sjw-shoppingmall",
+    "storage_bucket": "sjw-shoppingmall.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1026264339146:android:8c33a0749af94681c41a33",
+        "android_client_info": {
+          "package_name": "com.shinxxxxwon.shopping_mall"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1026264339146-6k6np1qvanbajfllotkrqiima5gsdsk9.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBStdJtQ89T2MzT8nRUkYcVa6iWoNUdezU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1026264339146-6k6np1qvanbajfllotkrqiima5gsdsk9.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "1026264339146-u4p879girnppn2hm82sch94oku886jh2.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.shinxxxxwon.shoppingMall"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
