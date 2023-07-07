@@ -9,6 +9,7 @@ import 'package:shopping_mall/controllers/product_controller.dart';
 import 'package:shopping_mall/models/product/product_model.dart';
 import 'package:shopping_mall/ui/product_detail_page.dart';
 import 'package:shopping_mall/ui/product_registration_page.dart';
+import 'package:shopping_mall/widgets/back_page_widget.dart';
 import 'package:shopping_mall/widgets/text_widget.dart';
 
 class MyProductPage extends StatefulWidget {
@@ -21,40 +22,6 @@ class MyProductPage extends StatefulWidget {
 
 class _MyProductPageState extends State<MyProductPage> {
 
-  Widget _backPage(Size size){
-    final marginHeight = size.height * 0.02;
-    final marginWidth = size.width * 0.05;
-
-    return Container(
-      width: size.width,
-      height: size.height * 0.05,
-      alignment: Alignment.centerLeft,
-      margin: EdgeInsets.only(top: marginHeight, left: marginWidth, right: marginWidth, bottom: marginHeight),
-      child: Row(
-        children: <Widget>[
-          GestureDetector(
-            onTap: () => Get.back(),
-            child: Icon(
-              Icons.arrow_back_ios_new,
-              color: Colors.black,
-              size: size.width * 0.07,
-            ),
-          ),
-
-          SizedBox(width: size.width * 0.05),
-
-          Text(
-            '등록상품',
-            style: TextStyle(
-              color: Colors.black,
-              fontSize: size.width * 0.06,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-        ],
-      ),
-    );
-  }
 
   Widget _productsView(Size size){
     final marginHeight = size.height * 0.02;
@@ -178,7 +145,7 @@ class _MyProductPageState extends State<MyProductPage> {
       child: Column(
         children: <Widget>[
 
-          _backPage(size),
+          BackPageWidget(text: '등록상품'),
 
           _productsView(size),
 

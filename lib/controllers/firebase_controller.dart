@@ -5,10 +5,13 @@ import 'dart:typed_data';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:shopping_mall/controllers/cart_controller.dart';
 import 'package:shopping_mall/controllers/product_controller.dart';
 import 'package:shopping_mall/controllers/user_controller.dart';
+import 'package:shopping_mall/models/cart/cart_model.dart';
 import 'package:shopping_mall/models/product/product_model.dart';
 import 'package:shopping_mall/models/user/user_model.dart';
 
@@ -172,7 +175,7 @@ class FirebaseController{
           }
         }
       });
-      print('products : $products');
+      // print('products : $products');
       Get.find<ProductController>().getProducts(products);
     }catch(e){
       print('getMyProductData error : ${e.toString()}');
@@ -196,7 +199,7 @@ class FirebaseController{
           products.add(product);
         }
       });
-      print('products : $products');
+      // print('products : $products');
       Get.find<ProductController>().getProducts(products);
     }catch(e){
       print('getMyProductData error : ${e.toString()}');
@@ -208,6 +211,10 @@ class FirebaseController{
       await FirebaseFirestore.instance.
       collection('shop/sOM21LLf2mJY8GyjLjoo/product').doc(product.key).
       delete();
+
+      // await _storageRef!.child(path).delete();
+      await _storage!.refFromURL(product.images!).delete();
+
 
       final data = ProductModel(key: product.key, id: product.id, title: product.title, info: product.info, category1: product.category1, category2: product.category2, price: product.price, images: product.images);
 
@@ -309,6 +316,70 @@ class FirebaseController{
     }
 
   }
+
+  insertCart(String productKey) async{
+    var carts = Get.find<CartController>().carts;
+    if(carts == null){
+      List<dynamic> data = [];
+      data.add(productKey);
+      carts = CartModel(key: data);
+    }
+    else{
+      List<dynamic> data = carts.key!.toList();
+      data.add(productKey);
+      carts = CartModel(key: data);
+    }
+    try {
+      
+      await FirebaseFirestore.instance.
+      collection('shop/sOM21LLf2mJY8GyjLjoo/cart').doc(userData!.id).
+      set({'carts':carts.key});
+
+      Get.find<CartController>().getCarts(carts);
+
+    }catch(e){
+      print('insert Cart Error : ${e.toString()}');
+    }
+  }
+
+  getCartProduct() async{
+    final cart = Get.find<CartController>().carts;
+
+    if(cart != null){
+      List<dynamic> keys = cart.key!.toList();
+      final productRef = await _firestore!.collection('shop/sOM21LLf2mJY8GyjLjoo/product').get();
+      List<ProductModel> list = [];
+      for(int i=0; i<keys.length; i++){
+        for(var document in productRef.docs) {
+          Map<String, dynamic> data = document.data() as Map<String, dynamic>;
+
+          if(data['key'].toString() == cart.key![i].toString()){
+            final product = ProductModel(key: data['key'], id: data['id'], title: data['title'], info: data['info'], category1: data['category1'], category2: data['category2'], price: data['price'], images: data['images']);
+            list.add(product);
+            break;
+          }
+        }
+      }
+      Get.find<CartController>().getCartProduct(list);
+    }
+    else{
+      print('product is null');
+    }
+  }
+
+  getCart() async{
+    try{
+      final cartRef = await _firestore!.collection('shop/sOM21LLf2mJY8GyjLjoo/cart').doc(userData!.id).get();
+
+      Map<String, dynamic> data = cartRef.data() as Map<String, dynamic>;
+      CartModel carts = CartModel(key: data['carts']);
+      Get.find<CartController>().getCarts(carts);
+
+    }catch(e){
+      print('getMyProductData error : ${e.toString()}');
+    }
+  }
+
 }
 
 FirebaseController firebaseController = FirebaseController();

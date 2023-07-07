@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:shopping_mall/controllers/product_controller.dart';
 import 'package:shopping_mall/ui/product_detail_page.dart';
+import 'package:shopping_mall/widgets/back_page_widget.dart';
 
 class ProductPage extends StatefulWidget {
   final bool? isBrand;
@@ -52,36 +53,7 @@ class _ProductPageState extends State<ProductPage> {
         title = "Shoose";
       }
     }
-
-    return Container(
-      width: size.width,
-      height: size.height * 0.05,
-      alignment: Alignment.centerLeft,
-      margin: EdgeInsets.only(top: marginHeight, left: marginWidth, right: marginWidth, bottom: marginHeight),
-      child: Row(
-        children: <Widget>[
-          GestureDetector(
-            onTap: () => Get.back(),
-            child: Icon(
-              Icons.arrow_back_ios_new,
-              color: Colors.black,
-              size: size.width * 0.07,
-            ),
-          ),
-
-          SizedBox(width: size.width * 0.05),
-
-          Text(
-            title,
-            style: TextStyle(
-              color: Colors.black,
-              fontSize: size.width * 0.06,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-        ],
-      ),
-    );
+    return BackPageWidget(text: title);
   }
 
   Widget _productView(Size size){

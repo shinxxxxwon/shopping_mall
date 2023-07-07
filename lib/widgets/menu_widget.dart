@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
+import 'package:shopping_mall/ui/cart_page.dart';
 import 'package:shopping_mall/ui/my_product_page.dart';
 
 class MenuWidget extends StatefulWidget {
@@ -36,7 +37,7 @@ class _MenuWidgetState extends State<MenuWidget> {
 
           }
           if(widget.label == '장바구니'){
-
+            Get.to(CartPage());
           }
         },
         child: Container(

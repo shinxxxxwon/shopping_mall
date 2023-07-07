@@ -5,6 +5,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_credit_card/credit_card_widget.dart';
 import 'package:get/get.dart';
 import 'package:shopping_mall/controllers/firebase_controller.dart';
+import 'package:shopping_mall/widgets/back_page_widget.dart';
 import 'package:shopping_mall/widgets/text_widget.dart';
 
 class CardRegistration extends StatefulWidget {
@@ -64,25 +65,6 @@ class _CardRegistrationState extends State<CardRegistration> {
     );
   }
 
-  Widget _backPageButton(Size size){
-    final marginHeight = size.height * 0.02;
-    final marginWidth = size.width * 0.05;
-
-    return Container(
-      width: size.width,
-      height: size.height * 0.05,
-      margin: EdgeInsets.only(top: marginHeight, left: marginWidth, right: marginWidth, bottom: marginHeight),
-      alignment: Alignment.centerLeft,
-      child: GestureDetector(
-        onTap: () => Get.back(),
-        child: Icon(
-          Icons.arrow_back_ios_new,
-          color: Colors.white,
-          size: size.width * 0.08,
-        ),
-      ),
-    );
-  }
 
   Widget _inputForm(Size size, TextEditingController controller, String hint){
     final marginHeight = size.height * 0.02;
@@ -295,7 +277,7 @@ class _CardRegistrationState extends State<CardRegistration> {
           child: Column(
             children: <Widget>[
 
-              _backPageButton(size),
+              BackPageWidget(text: ''),
 
               _cardView(size),
 

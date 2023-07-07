@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
+import 'package:shopping_mall/controllers/cart_controller.dart';
 import 'package:shopping_mall/controllers/firebase_controller.dart';
 import 'package:shopping_mall/controllers/home_controller.dart';
 import 'package:shopping_mall/controllers/product_controller.dart';
@@ -344,6 +345,7 @@ class _MainPageState extends State<MainPage> {
     Get.put(HomeController());
     Get.put(UserController());
     Get.put(ProductController());
+    Get.put(CartController());
 
     Size size = MediaQuery.of(context).size;
 

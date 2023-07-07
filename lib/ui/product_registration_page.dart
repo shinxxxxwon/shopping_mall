@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:shopping_mall/controllers/firebase_controller.dart';
+import 'package:shopping_mall/widgets/back_page_widget.dart';
 import 'package:shopping_mall/widgets/text_widget.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -59,40 +60,6 @@ class _ProductRegistrationPageState extends State<ProductRegistrationPage> {
   String _selectBrand = "";
   String _category = "";
 
-  Widget _backPage(Size size){
-    final marginHeight = size.height * 0.02;
-    final marginWidth = size.width * 0.05;
-
-    return Container(
-      width: size.width,
-      height: size.height * 0.05,
-      alignment: Alignment.centerLeft,
-      margin: EdgeInsets.only(top: marginHeight, left: marginWidth, right: marginWidth, bottom: marginHeight),
-      child: Row(
-        children: <Widget>[
-          GestureDetector(
-            onTap: () => Get.back(),
-            child: Icon(
-              Icons.arrow_back_ios_new,
-              color: Colors.black,
-              size: size.width * 0.07,
-            ),
-          ),
-
-          SizedBox(width: size.width * 0.05),
-
-          Text(
-            '상품등록',
-            style: TextStyle(
-              color: Colors.black,
-              fontSize: size.width * 0.06,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-        ],
-      ),
-    );
-  }
 
   Widget _inputForm(Size size, TextEditingController controller, String hint, int type){
     final marginHeight = size.height * 0.01;
@@ -401,7 +368,7 @@ class _ProductRegistrationPageState extends State<ProductRegistrationPage> {
         child: ListView(
           children: <Widget>[
 
-            _backPage(size),
+            BackPageWidget(text: '상품등록'),
 
             TextWidget(text: '제목', alignment: Alignment.centerLeft, color: Colors.black, textSize: size.width * 0.04),
 
@@ -479,9 +446,11 @@ class _ProductRegistrationPageState extends State<ProductRegistrationPage> {
 
   void getImage(ImageSource source) async {
     final XFile? image = await _picker.pickImage(source: source);
-    setState(() {
-      _pickedImages.add(image);
-    });
+    if (image != null) {
+      setState(() {
+        _pickedImages.add(image);
+      });
+    }
   }
 
 
