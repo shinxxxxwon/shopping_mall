@@ -8,7 +8,6 @@ import 'package:shopping_mall/controllers/firebase_controller.dart';
 import 'package:shopping_mall/controllers/home_controller.dart';
 import 'package:shopping_mall/controllers/product_controller.dart';
 import 'package:shopping_mall/controllers/user_controller.dart';
-import 'package:shopping_mall/ui/product_detail_page.dart';
 import 'package:shopping_mall/ui/product_page.dart';
 import 'package:shopping_mall/widgets/card_widget.dart';
 import 'package:shopping_mall/widgets/menu_widget.dart';
@@ -33,7 +32,7 @@ class _MainPageState extends State<MainPage> {
       margin: EdgeInsets.only(left: marginWidth, right: marginWidth, bottom: marginWidth),
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(16.0),
-          image: DecorationImage(
+          image: const DecorationImage(
             image: NetworkImage(
                 'https://img.freepik.com/premium-photo/cool-people-posing-together-full-shot_23-2149409769.jpg?w=2000'),
             fit: BoxFit.fill,
@@ -43,7 +42,6 @@ class _MainPageState extends State<MainPage> {
 
   Widget _brandView(Size size) {
     final marginWidth = size.width * 0.03;
-    final marginHeight = size.height * 0.01;
 
     final List<String> imageUrl = [
       'https://img.freepik.com/premium-photo/pretty-young-woman-trendy-outfit_251859-583.jpg?w=900',
@@ -117,12 +115,12 @@ class _MainPageState extends State<MainPage> {
     final List<String> imageUrl = [
       'https://i.pinimg.com/736x/48/9f/2b/489f2b0c7ddd48a7a96ca1a8cc4b3c69.jpg', //Cloths
       'https://i.pinimg.com/736x/c2/34/1e/c2341e1b4ec0e863dbdcd4dbcfb5f0a4.jpg', //Bags,
-      'https://i.pinimg.com/564x/e2/35/bf/e235bf15fdb30f605ab6fdeeafa3064e.jpg', //shoose
+      'https://i.pinimg.com/564x/e2/35/bf/e235bf15fdb30f605ab6fdeeafa3064e.jpg', //shoes
     ];
     final List<String> categoryTitle = [
       'Cloths',
       'Bags',
-      'Shoose',
+      'Shoes',
     ];
 
     return Container(
@@ -174,7 +172,7 @@ class _MainPageState extends State<MainPage> {
   Widget _contentsView(Size size) {
     return Container(
       width: size.width,
-      height: size.height * 0.9,
+      height: size.height * 0.85,
       padding: EdgeInsets.only(bottom: size.height * 0.02),
       decoration: const BoxDecoration(
         color: Color(0xFF595959),
@@ -185,7 +183,7 @@ class _MainPageState extends State<MainPage> {
       child: ListView(
         children: [
 
-          SearchWidget(),
+          const SearchWidget(),
 
           TextWidget(
             text: 'Discover',
@@ -250,7 +248,7 @@ class _MainPageState extends State<MainPage> {
   Widget _myPageView(Size size){
     return Container(
       width: size.width,
-      height: size.height * 0.9,
+      height: size.height * 0.85,
       padding: EdgeInsets.only(bottom: size.height * 0.02),
       decoration: const BoxDecoration(
         color: Color(0xFF595959),
@@ -269,7 +267,7 @@ class _MainPageState extends State<MainPage> {
 
               SizedBox(height: size.height * 0.02),
 
-              CardWidget(),
+              const CardWidget(),
 
               _myPageMenu(controller.userInfo!.id!, size),
 
@@ -292,11 +290,15 @@ class _MainPageState extends State<MainPage> {
 
           GestureDetector(
             onTap: () => Get.find<HomeController>().changeTabsButtonState(0),
+            // child: Icon(Icons.home_outlined),
             child: TabsButtonWidget(icon: Icons.home_outlined, text: 'Home', type: 0),
           ),
 
+          SizedBox(width: size.width * 0.1),
+
           GestureDetector(
             onTap: () => Get.find<HomeController>().changeTabsButtonState(1),
+            // child: Icon(Icons.account_circle_outlined),
             child: TabsButtonWidget(icon: Icons.account_circle_outlined, text: 'My Page', type: 1),
           ),
 
@@ -351,12 +353,14 @@ class _MainPageState extends State<MainPage> {
 
     return Platform.isAndroid
         ? MaterialApp(
+      theme: ThemeData.light(),
             home: Scaffold(
               resizeToAvoidBottomInset: false,
               body: _pageView(size),
             ),
           )
         : CupertinoApp(
+      theme: const CupertinoThemeData(brightness: Brightness.light),
             home: CupertinoPageScaffold(
               resizeToAvoidBottomInset: false,
               child: _pageView(size),

@@ -66,7 +66,7 @@ class FirebaseController{
 
       await reference.putData(byteData.buffer.asUint8List(), metadata);
       final downloadUrl = await reference.getDownloadURL();
-      print('downloadUrl : $downloadUrl');
+      // print('downloadUrl : $downloadUrl');
 
       final productRef = await FirebaseFirestore.instance.
       collection('shop/sOM21LLf2mJY8GyjLjoo/product').doc();
@@ -89,8 +89,6 @@ class FirebaseController{
     }catch(e){
       print('insert Card Error : ${e.toString()}');
     }
-
-
 
   }
 
@@ -163,7 +161,7 @@ class FirebaseController{
                 products.add(product);
               }
               break;
-            //Shoose
+            //Shoes
             case 2:
               if(data['category2'] == category) {
                 final product = ProductModel(key: data['key'], id: data['id'], title: data['title'], info: data['info'], category1: data['category1'], category2: data['category2'], price: data['price'], images: data['images']);

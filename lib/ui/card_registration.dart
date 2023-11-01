@@ -56,7 +56,7 @@ class _CardRegistrationState extends State<CardRegistration> {
         isHolderNameVisible: true,
         isChipVisible: true,
         isSwipeGestureEnabled: false,
-        animationDuration: Duration(milliseconds: 1000),
+        animationDuration: const Duration(milliseconds: 1000),
         frontCardBorder: Border.all(color: Colors.grey),
         backCardBorder: Border.all(color: Colors.grey),
         onCreditCardWidgetChange: (CreditCardBrand ) {  },
@@ -277,7 +277,7 @@ class _CardRegistrationState extends State<CardRegistration> {
           child: Column(
             children: <Widget>[
 
-              BackPageWidget(text: ''),
+              const BackPageWidget(text: '', color: Colors.white,),
 
               _cardView(size),
 
@@ -317,6 +317,7 @@ class _CardRegistrationState extends State<CardRegistration> {
     
     return Platform.isAndroid
         ? MaterialApp(
+      themeMode:ThemeMode.light,
       home: Scaffold(
         backgroundColor: const Color(0xFF202020),
         resizeToAvoidBottomInset: false,
@@ -326,6 +327,7 @@ class _CardRegistrationState extends State<CardRegistration> {
       ),
     )
         : CupertinoApp(
+      theme: const CupertinoThemeData(brightness: Brightness.light),
       home: CupertinoPageScaffold(
         backgroundColor: const Color(0xFF202020),
         resizeToAvoidBottomInset: false,

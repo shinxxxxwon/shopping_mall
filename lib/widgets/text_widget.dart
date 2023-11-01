@@ -14,7 +14,6 @@ class TextWidget extends StatelessWidget {
     Size size = MediaQuery.of(context).size;
 
     final marginWidth = size.width * 0.05;
-    final marginHeight = size.height * 0.02;
 
     return Container(
       width: size.width,

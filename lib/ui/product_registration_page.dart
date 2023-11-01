@@ -29,16 +29,16 @@ class _ProductRegistrationPageState extends State<ProductRegistrationPage> {
   int _category2 = 0;
 
   List<Text> aosBrands = [
-    Text('GUCCI'),
-    Text('BERBURY'),
-    Text('Louis Vuitton'),
-    Text('CHANNEL'),
-    Text('PRADA')
+    const Text('GUCCI'),
+    const Text('BERBURY'),
+    const Text('Louis Vuitton'),
+    const Text('CHANNEL'),
+    const Text('PRADA')
   ];
   List<Text> aosCategorys = [
-    Text('Cloths'),
-    Text('Bags'),
-    Text('Shoose')
+    const Text('Cloths'),
+    const Text('Bags'),
+    const Text('Shoes')
   ];
 
   List<String> iosBrands = [
@@ -51,7 +51,7 @@ class _ProductRegistrationPageState extends State<ProductRegistrationPage> {
   List<String> iosCategorys = [
     'Cloths',
     'Bags',
-    'Shoose'
+    'Shoes'
   ];
 
   final ImagePicker _picker = ImagePicker();
@@ -368,7 +368,7 @@ class _ProductRegistrationPageState extends State<ProductRegistrationPage> {
         child: ListView(
           children: <Widget>[
 
-            BackPageWidget(text: '상품등록'),
+            const BackPageWidget(text: '상품등록', color: Colors.black),
 
             TextWidget(text: '제목', alignment: Alignment.centerLeft, color: Colors.black, textSize: size.width * 0.04),
 
@@ -411,6 +411,7 @@ class _ProductRegistrationPageState extends State<ProductRegistrationPage> {
     
     return Platform.isAndroid
         ? MaterialApp(
+      theme: ThemeData.light(),
       home: Scaffold(
         resizeToAvoidBottomInset: false,
         body: SafeArea(
@@ -419,6 +420,7 @@ class _ProductRegistrationPageState extends State<ProductRegistrationPage> {
       ),
     )
         : CupertinoApp(
+      theme: const CupertinoThemeData(brightness: Brightness.light),
       home: CupertinoPageScaffold(
         resizeToAvoidBottomInset: false,
         child: SafeArea(

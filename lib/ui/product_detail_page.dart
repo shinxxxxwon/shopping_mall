@@ -5,10 +5,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:shopping_mall/controllers/cart_controller.dart';
 import 'package:shopping_mall/controllers/firebase_controller.dart';
 import 'package:shopping_mall/models/product/product_model.dart';
-import 'package:shopping_mall/ui/pay_page.dart';
 
 class ProductDetailPage extends StatefulWidget {
   final ProductModel? product;
@@ -22,6 +22,7 @@ class ProductDetailPage extends StatefulWidget {
 
 class _ProductDetailPageState extends State<ProductDetailPage> {
   bool _isDone = false;
+  final format = NumberFormat('###,###');
 
   Widget _backPage(Size size){
     final marginHeight = size.height * 0.01;
@@ -58,7 +59,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                     color: Colors.black,
                   ),
                 ) :
-                SizedBox(),
+                const SizedBox(),
           ),
 
           widget.isMy == false ?
@@ -79,7 +80,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                 ),
               ),
             ),
-          ) : SizedBox(),
+          ) : const SizedBox(),
 
         ],
       ),
@@ -159,7 +160,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
       child: RichText(
         overflow: TextOverflow.ellipsis,
         maxLines: 5,
-        strutStyle: StrutStyle(fontSize: 16.0),
+        strutStyle: const StrutStyle(fontSize: 16.0),
         text: TextSpan(
           text: widget.product!.info!,
           style: TextStyle(
@@ -176,7 +177,35 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
     final marginWidth = size.width * 0.05;
 
     return GestureDetector(
-      onTap: () => Get.to(PayPage()),
+      onTap: (){
+        Platform.isAndroid
+            ? showMaterialModalBottomSheet(
+            duration: const Duration(milliseconds: 500),
+            context: context,
+            shape: const RoundedRectangleBorder(
+              borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(16.0),
+                topRight: Radius.circular(16.0),
+              ),
+            ),
+            builder: (context){
+              return _bottomSheetView(size);
+            }
+        )
+            : showCupertinoModalBottomSheet(
+            context: context,
+            duration: const Duration(milliseconds: 500),
+            shape: const RoundedRectangleBorder(
+              borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(16.0),
+                topRight: Radius.circular(16.0),
+              ),
+            ),
+            builder: (context){
+              return _bottomSheetView(size);
+            }
+        );
+      },
       child: Container(
         width: size.width,
         height: size.height * 0.08,
@@ -194,6 +223,70 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
             fontSize: size.width * 0.06,
           ),
         ),
+      ),
+    );
+  }
+
+
+  Widget _bottomSheetView(Size size){
+    final marginWidth = size.width * 0.05;
+
+    return SizedBox(
+      width: size.width,
+      height: size.height * 0.2,
+      child: Column(
+        children: <Widget>[
+
+          SizedBox(height: size.height * 0.03),
+
+          Container(
+            width: size.width,
+            height: size.height * 0.05,
+            alignment: Alignment.centerLeft,
+            margin: EdgeInsets.only(left: marginWidth, right: marginWidth),
+            child: Text(
+              widget.product!.title!,
+              style: TextStyle(
+                fontWeight: FontWeight.w600,
+                fontSize: size.width * 0.04,
+              ),
+            ),
+          ),
+
+          Container(
+            width: size.width,
+            height: size.height * 0.05,
+            alignment: Alignment.centerLeft,
+            margin: EdgeInsets.only(left: marginWidth, right: marginWidth),
+            child: Text(
+              '${format.format(widget.product!.price!)}원',
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: size.width * 0.05,
+              ),
+            ),
+          ),
+
+          Container(
+            width: size.width,
+            height: size.height * 0.05,
+            alignment: Alignment.center,
+            margin: EdgeInsets.only(left: marginWidth, right: marginWidth),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(16.0),
+              color: Colors.red,
+            ),
+            child: Text(
+              '구매하기',
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: size.width * 0.04,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ),
+
+        ],
       ),
     );
   }
@@ -216,7 +309,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
 
           _infoText(size),
 
-          widget.isMy! == false ? _okButton(size) : SizedBox(),
+          widget.isMy! == false ? _okButton(size) : const SizedBox(),
 
         ],
       ),
@@ -236,6 +329,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
 
     return Platform.isAndroid
         ? MaterialApp(
+      theme: ThemeData.light(),
       home: Scaffold(
         body: SafeArea(
           child: _pageView(size),
@@ -243,6 +337,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
       ),
     )
         : CupertinoApp(
+      theme: const CupertinoThemeData(brightness: Brightness.light),
       home: CupertinoPageScaffold(
         child: SafeArea(
           child: _pageView(size),

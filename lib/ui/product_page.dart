@@ -50,10 +50,10 @@ class _ProductPageState extends State<ProductPage> {
         title = "Bags";
       }
       else{
-        title = "Shoose";
+        title = "Shoes";
       }
     }
-    return BackPageWidget(text: title);
+    return BackPageWidget(text: title, color: Colors.black);
   }
 
   Widget _productView(Size size){
@@ -66,7 +66,7 @@ class _ProductPageState extends State<ProductPage> {
           height: size.height * 0.85,
           alignment: Alignment.center,
           child: GridView.builder(
-            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
               crossAxisCount: 2,
               childAspectRatio: 1/1.5,
             ),
@@ -86,14 +86,14 @@ class _ProductPageState extends State<ProductPage> {
                     children: <Widget>[
 
                       Expanded(
-                          flex: 4,
-                          child: SizedBox(
-                            width: size.width,
-                            child: Image.network(
-                              controller.products[index].images!,
-                              fit: BoxFit.fill,
-                            ),
-                          )
+                        flex: 4,
+                        child: SizedBox(
+                          width: size.width,
+                          child: Image.network(
+                            controller.products[index].images!,
+                            fit: BoxFit.fill,
+                          ),
+                        ),
                       ),
 
                       Expanded(
@@ -159,6 +159,7 @@ class _ProductPageState extends State<ProductPage> {
     
     return Platform.isAndroid
         ? MaterialApp(
+      theme: ThemeData.light(),
       home: Scaffold(
         body: SafeArea(
           child: _pageView(size),
@@ -166,6 +167,7 @@ class _ProductPageState extends State<ProductPage> {
       ),
     )
         : CupertinoApp(
+      theme: const CupertinoThemeData(brightness: Brightness.light),
       home: CupertinoPageScaffold(
         child: SafeArea(
           child: _pageView(size),

@@ -70,12 +70,14 @@ class _MyAppState extends State<MyApp> {
 
     return Platform.isAndroid
         ? GetMaterialApp(
+      theme: ThemeData.light(),
       home: Scaffold(
         resizeToAvoidBottomInset : false,
         body:  _pageView(),
       ),
     )
         : GetCupertinoApp(
+      theme: const CupertinoThemeData(brightness: Brightness.light),
       home: CupertinoPageScaffold(
         resizeToAvoidBottomInset : false,
         child: _pageView(),

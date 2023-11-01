@@ -270,7 +270,7 @@ class _SignupPageState extends State<SignupPage> {
     else if(_userPassword.text.length < 8){
       return false;
     }
-    else if(_userName.text.length < 1){
+    else if(_userName.text.isEmpty){
       return false;
     }
     else if(_userPhone.text.length != 13){
@@ -291,7 +291,7 @@ class _SignupPageState extends State<SignupPage> {
     else if(_userPassword.text.length < 8){
       text = "비밀번호는 8글자 이상이어야합니다.";
     }
-    else if(_userName.text.length < 1){
+    else if(_userName.text.isEmpty){
       text = "이름을 입력해주세요.";
     }
     else if(_userPhone.text.length != 13){
@@ -452,7 +452,7 @@ class _SignupPageState extends State<SignupPage> {
         child: Container(
           width: size.width,
           height: size.height,
-          decoration: BoxDecoration(
+          decoration: const BoxDecoration(
             image: DecorationImage(
                 image: NetworkImage('https://images.unsplash.com/photo-1627292441194-0280c19e74e4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=774&q=80'),
                 fit: BoxFit.fill
@@ -510,11 +510,13 @@ class _SignupPageState extends State<SignupPage> {
 
     return Platform.isAndroid
         ? MaterialApp(
+      theme: ThemeData.light(),
       home: Scaffold(
         body: _pageView(_size),
       ),
     )
         : CupertinoApp(
+      theme: const CupertinoThemeData(brightness: Brightness.light),
       home: CupertinoPageScaffold(
         child: _pageView(_size),
       ),

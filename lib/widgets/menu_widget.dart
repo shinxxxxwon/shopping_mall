@@ -37,7 +37,7 @@ class _MenuWidgetState extends State<MenuWidget> {
 
           }
           if(widget.label == '장바구니'){
-            Get.to(CartPage());
+            Get.to(const CartPage());
           }
         },
         child: Container(

@@ -4,7 +4,8 @@ import 'package:get/get.dart';
 
 class BackPageWidget extends StatelessWidget {
   final String? text;
-  const BackPageWidget({Key? key, this.text}) : super(key: key);
+  final Color? color;
+  const BackPageWidget({Key? key, this.text, this.color}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +25,7 @@ class BackPageWidget extends StatelessWidget {
             onTap: () => Get.back(),
             child: Icon(
               Icons.arrow_back_ios_new,
-              color: Colors.black,
+              color: color!,
               size: size.width * 0.07,
             ),
           ),

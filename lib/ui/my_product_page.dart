@@ -24,9 +24,6 @@ class _MyProductPageState extends State<MyProductPage> {
 
 
   Widget _productsView(Size size){
-    final marginHeight = size.height * 0.02;
-    final marginWidth = size.width * 0.05;
-
     final format = NumberFormat('###,###');
 
     return GetBuilder<ProductController>(
@@ -37,7 +34,7 @@ class _MyProductPageState extends State<MyProductPage> {
           // margin: EdgeInsets.only(top: marginHeight, left: marginWidth, right: marginWidth, bottom: marginHeight),
           alignment: Alignment.center,
           child: GridView.builder(
-            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
               crossAxisCount: 2,
               childAspectRatio: 1/1.5,
             ),
@@ -145,7 +142,7 @@ class _MyProductPageState extends State<MyProductPage> {
       child: Column(
         children: <Widget>[
 
-          BackPageWidget(text: '등록상품'),
+          const BackPageWidget(text: '등록상품', color: Colors.black,),
 
           _productsView(size),
 
@@ -169,6 +166,7 @@ class _MyProductPageState extends State<MyProductPage> {
 
     return Platform.isAndroid
         ? MaterialApp(
+      theme: ThemeData.light(),
       home: Scaffold(
         body: SafeArea(
           child: _pageView(size),
@@ -176,6 +174,7 @@ class _MyProductPageState extends State<MyProductPage> {
       ),
     )
         : CupertinoApp(
+      theme: const CupertinoThemeData(brightness: Brightness.light),
       home: CupertinoPageScaffold(
         child: SafeArea(
           child: _pageView(size),
@@ -213,7 +212,7 @@ class _MyProductPageState extends State<MyProductPage> {
                   child: Text(title),
                 ),
 
-                Divider(),
+                const Divider(),
 
                 GestureDetector(
                   onTap: (){

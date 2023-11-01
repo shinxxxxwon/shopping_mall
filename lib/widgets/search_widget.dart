@@ -47,6 +47,7 @@ class _SearchWidgetState extends State<SearchWidget> with SingleTickerProviderSt
         _animationController.forward();
       } else {
         _animationController.reverse();
+        FocusScope.of(context).unfocus();
       }
     });
   }

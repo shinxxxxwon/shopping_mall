@@ -44,7 +44,7 @@ class _CardWidgetState extends State<CardWidget> {
                  child: Text(title),
                ),
 
-                Divider(),
+                const Divider(),
 
                 GestureDetector(
                   onTap: (){

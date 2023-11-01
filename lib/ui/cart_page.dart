@@ -130,9 +130,9 @@ class _CartPageState extends State<CartPage> {
       child: Column(
         children: <Widget>[
 
-          Expanded(
+          const Expanded(
             flex: 1,
-            child: BackPageWidget(text: '장바구니'),
+            child: BackPageWidget(text: '장바구니', color: Colors.black,),
           ),
 
           Expanded(
@@ -162,6 +162,7 @@ class _CartPageState extends State<CartPage> {
 
     return Platform.isAndroid
         ? MaterialApp(
+      theme: ThemeData.light(),
       home: Scaffold(
         body: SafeArea(
           child: _pageView(size),
@@ -169,6 +170,7 @@ class _CartPageState extends State<CartPage> {
       ),
     )
         : CupertinoApp(
+      theme: const CupertinoThemeData(brightness: Brightness.light),
       home: CupertinoPageScaffold(
         child: SafeArea(
           child: _pageView(size),
